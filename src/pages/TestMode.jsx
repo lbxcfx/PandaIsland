@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Mic, ChevronRight, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Mic, ChevronRight, ChevronLeft, AlertCircle } from 'lucide-react';
 import useSpeechRecognition from '../hooks/useSpeechRecognition';
 import { useGame } from '../context/GameContext';
 import { CURRICULUM } from '../data/curriculum';
@@ -8,7 +8,7 @@ import { CURRICULUM } from '../data/curriculum';
 const TestMode = () => {
     const navigate = useNavigate();
     const { currentSelection, addXP, addMistake, selectCurriculum } = useGame();
-    const { isListening, transcript, startListening, stopListening, setTranscript } = useSpeechRecognition();
+    const { isListening, transcript, error, startListening, stopListening, setTranscript } = useSpeechRecognition();
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);
@@ -86,7 +86,27 @@ const TestMode = () => {
                 <h1 style={{ marginLeft: '20px', fontSize: '1.5rem', margin: 0 }}>Test: {lesson.name}</h1>
             </div>
 
-            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '40px' }}>
+            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px' }}>
+
+                {/* Prev Arrow (Disabled) */}
+                <button
+                    disabled={true}
+                    style={{
+                        background: 'rgba(255,255,255,0.1)',
+                        border: 'none',
+                        borderRadius: '50%',
+                        width: '50px',
+                        height: '50px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'not-allowed',
+                        opacity: 0.3,
+                        color: 'white'
+                    }}
+                >
+                    <ChevronLeft size={32} />
+                </button>
 
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     {/* Test Card - Flippable */}
@@ -176,8 +196,8 @@ const TestMode = () => {
                             className={isListening ? 'animate-glow' : ''}
                             style={{
                                 borderRadius: '50%',
-                                width: '100px',
-                                height: '100px',
+                                width: '80px',
+                                height: '80px',
                                 padding: 0,
                                 display: 'flex',
                                 alignItems: 'center',
@@ -186,54 +206,57 @@ const TestMode = () => {
                                 border: 'none',
                                 cursor: 'pointer',
                                 color: 'white',
-                                boxShadow: '0 0 30px rgba(139, 92, 246, 0.3)'
+                                boxShadow: '0 4px 15px rgba(0,0,0,0.3)'
                             }}
                         >
-                            <Mic size={50} />
+                            <Mic size={40} />
                         </button>
                     </div>
 
                     {/* Feedback */}
                     <div style={{ height: '40px', marginTop: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        {feedback === 'correct' && (
-                            <div style={{ color: 'var(--color-success)', fontSize: '1.5rem', fontWeight: 'bold' }}>
-                                Correct! Next...
+                        {error ? (
+                            <div style={{ color: 'var(--color-error)', fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <AlertCircle size={20} /> {error}
                             </div>
-                        )}
-                        {feedback === 'incorrect' && (
-                            <div style={{ color: 'var(--color-error)', fontSize: '1.5rem', fontWeight: 'bold' }}>
-                                Try Again
-                            </div>
-                        )}
-                        {transcript && !feedback && (
-                            <div style={{ color: '#94a3b8' }}>Listening: "{transcript}"</div>
+                        ) : (
+                            <>
+                                {feedback === 'correct' && (
+                                    <div style={{ color: 'var(--color-success)', fontSize: '1.5rem', fontWeight: 'bold' }}>
+                                        Correct! Next...
+                                    </div>
+                                )}
+                                {feedback === 'incorrect' && (
+                                    <div style={{ color: 'var(--color-error)', fontSize: '1.5rem', fontWeight: 'bold' }}>
+                                        Try Again
+                                    </div>
+                                )}
+                                {transcript && !feedback && (
+                                    <div style={{ color: '#94a3b8' }}>Listening: "{transcript}"</div>
+                                )}
+                            </>
                         )}
                     </div>
                 </div>
 
-                {/* Skip/Next Arrow */}
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
-                    <button
-                        onClick={() => handleNext(false)}
-                        style={{
-                            background: 'rgba(255,255,255,0.1)',
-                            border: 'none',
-                            borderRadius: '50%',
-                            width: '60px',
-                            height: '60px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: 'pointer',
-                            color: 'white',
-                            transition: 'all 0.2s'
-                        }}
-                        title="Skip (Mark as Mistake)"
-                    >
-                        <ChevronRight size={32} />
-                    </button>
-                    <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>SKIP</span>
-                </div>
+                {/* Next Arrow */}
+                <button
+                    onClick={() => handleNext(false)}
+                    style={{
+                        background: 'rgba(255,255,255,0.1)',
+                        border: 'none',
+                        borderRadius: '50%',
+                        width: '50px',
+                        height: '50px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        color: 'white'
+                    }}
+                >
+                    <ChevronRight size={32} />
+                </button>
 
             </div>
 
