@@ -172,16 +172,18 @@ const PracticeMode = () => {
                                 flexDirection: 'column',
                                 alignItems: 'center',
                                 justifyContent: 'center',
+                                padding: '20px',
+                                boxSizing: 'border-box'
                             }}>
                                 <div style={{
-                                    fontSize: '12rem',
+                                    fontSize: '8rem',
                                     marginBottom: '20px',
                                     filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.5))',
                                     textShadow: '0 0 30px rgba(59, 130, 246, 0.5)'
                                 }}>
                                     {currentWord.image}
                                 </div>
-                                <h2 style={{ fontSize: '3rem', margin: 0, color: 'white', textShadow: '0 0 10px rgba(0,0,0,0.5)' }}>{currentWord.translation}</h2>
+                                <h2 style={{ fontSize: '2.5rem', margin: 0, color: 'white', textShadow: '0 0 10px rgba(0,0,0,0.5)', textAlign: 'center', wordBreak: 'break-word' }}>{currentWord.translation}</h2>
                             </div>
 
                             {/* Back - Image + English + Phonetic */}
@@ -197,16 +199,18 @@ const PracticeMode = () => {
                                 flexDirection: 'column',
                                 alignItems: 'center',
                                 justifyContent: 'center',
+                                padding: '20px',
+                                boxSizing: 'border-box'
                             }}>
                                 <div style={{
-                                    fontSize: '10rem',
+                                    fontSize: '6rem',
                                     marginBottom: '10px',
                                     filter: 'drop-shadow(0 0 15px rgba(255,255,255,0.3))'
                                 }}>
                                     {currentWord.image}
                                 </div>
-                                <h2 style={{ fontSize: '3.5rem', margin: 0, color: 'white', fontWeight: 'bold' }}>{currentWord.word}</h2>
-                                <p style={{ fontSize: '1.8rem', color: '#94a3b8', marginTop: '10px', fontFamily: 'monospace' }}>{currentWord.phonetic}</p>
+                                <h2 style={{ fontSize: '2.5rem', margin: 0, color: 'white', fontWeight: 'bold', textAlign: 'center', wordBreak: 'break-word' }}>{currentWord.word}</h2>
+                                <p style={{ fontSize: '1.5rem', color: '#94a3b8', marginTop: '10px', fontFamily: 'monospace', textAlign: 'center' }}>{currentWord.phonetic}</p>
                             </div>
                         </div>
                     </div>
